@@ -13,13 +13,13 @@ module.exports = class Lightbulb extends Device {
         this.log('Creating new lightbulb %s (%s)...', this.name, this.id);
         this.lightbulb = new this.Service.Lightbulb(this.name, this.uuid);
 
+
         this.hue = 0;
         this.saturation = 0;
         this.luminance = 50;
         this.power = 0;
         this.brightness = 0;
 
-        this.addService(this.lightbulb);
 
         this.enablePower();
         this.enableBrightness();
@@ -28,6 +28,9 @@ module.exports = class Lightbulb extends Device {
         this.updateSaturation();
 
         this.installClock();
+
+        this.addService(this.lightbulb);
+
     }
 
     deviceChanged(device) {
@@ -47,10 +50,11 @@ module.exports = class Lightbulb extends Device {
         this.hue = (((now.getHours() % 12) * 60) + now.getMinutes()) / 2;
         hue.updateValue(this.hue);
 
-        this.log('Setting hue to %s on lightbulb \'%s\'', hue, this.name);
+        this.log('Setting hue to %s on lightbulb \'%s\'', this.hue, this.name);
 
         this.platform.gateway.operateLight(this.device, {
-            hue: hue
+            color: ColorConvert.hsl.hex(this.hue, this.saturation, this.luminance),
+            transitionTime: 0.1
         })
         .catch((error) => {
             this.log(error);
@@ -63,7 +67,7 @@ module.exports = class Lightbulb extends Device {
 
     installClock() {
 
-        setInterval(this.displayClock, 1000);
+        setInterval(this.displayClock.bind(this), 1000);
 
 
     }
