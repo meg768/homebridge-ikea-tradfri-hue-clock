@@ -1,0 +1,25 @@
+{
+  "name": "homebridge-ikea-tradfri-hue-clock",
+  "version": "1.0.0",
+  "description": "homebridge-ikea-tradfri-hue-clock",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meg768/homebridge-ikea-tradfri-hue-clock.git"
+  },
+  "dependencies": {
+    "color-convert": "^1.9.1",
+    "dotenv": "^4.0.0",
+    "node-tradfri-client": "^0.6.0",
+    "yow": "^1.0.85"
+  },  
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/meg768/homebridge-ikea-tradfri-hue-clock/issues"
+  },
+  "homepage": "https://github.com/meg768/homebridge-ikea-tradfri-hue-clock#readme"
+}
