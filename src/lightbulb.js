@@ -46,11 +46,15 @@ module.exports = class Lightbulb extends Device {
     displayClock(callback) {
         var now = new Date();
         var hue = this.lightbulb.getCharacteristic(this.Characteristic.Hue);
+        var saturation = this.lightbulb.getCharacteristic(this.Characteristic.Saturation);
 
-        this.hue = (((now.getHours() % 12) * 60) + now.getMinutes()) / 2;
+        this.saturation = 100;
+        this.luminance = 50;
+        this.hue = ((((now.getHours()-4) % 12) * 60) + now.getMinutes()) / 2;
         hue.updateValue(this.hue);
+        saturation.updateValue(this.saturation);
 
-        this.log('Setting hue to %s on lightbulb \'%s\'', this.hue, this.name);
+        this.log('Setting hue to (%s,%s,%s) on lightbulb \'%s\'', this.hue, this.saturation, this.luminance, this.name);
 
         this.platform.gateway.operateLight(this.device, {
             color: ColorConvert.hsl.hex(this.hue, this.saturation, this.luminance),
@@ -66,8 +70,8 @@ module.exports = class Lightbulb extends Device {
     }
 
     installClock() {
-
-        setInterval(this.displayClock.bind(this), 1000);
+        this.displayClock();
+        setInterval(this.displayClock.bind(this), 60000);
 
 
     }

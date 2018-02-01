@@ -50,7 +50,7 @@ module.exports = class Platform extends Gateway {
             if (device.type === Ikea.AccessoryTypes.lightbulb) {
 
                 if (device.name == this.config.lightbulb) {
-                    device.name = 'Hue Clock';
+                    //device.name = this.config.displayName;
                     this.log('Creating new clock!!');
                     this.clock = new Lightbulb(this, device);
                 }
