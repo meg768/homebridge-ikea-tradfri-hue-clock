@@ -26,6 +26,8 @@ module.exports = class Lightbulb extends Device {
         this.enableStatus();
         this.updateHue();
         this.updateSaturation();
+
+        this.installClock();
     }
 
     deviceChanged(device) {
@@ -36,6 +38,33 @@ module.exports = class Lightbulb extends Device {
         this.updateStatus();
         this.updateHue();
         this.updateSaturation();
+    }
+
+    displayClock(callback) {
+        var now = new Date();
+
+        this.hue = (((now.getHours() % 12) * 60) + now.getMinutes()) / 2;
+        hue.updateValue(this.hue);
+
+        this.log('Setting hue to %s on lightbulb \'%s\'', hue, this.name);
+
+        this.platform.gateway.operateLight(this.device, {
+            hue: hue
+        })
+        .catch((error) => {
+            this.log(error);
+        })
+        .then(() => {
+            if (callback)
+                callback();
+        });
+    }
+
+    installClock() {
+
+        setInterval(this.displayClock, 1000);
+
+
     }
 
     enablePower() {

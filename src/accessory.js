@@ -66,8 +66,8 @@ module.exports = class Accessory extends Events {
         return this.id;
     }
 
-    addService(name, service) {
-        this.services[name] = service;
+    addService(service) {
+        this.services.push(service);
     }
 
     identify(callback) {
