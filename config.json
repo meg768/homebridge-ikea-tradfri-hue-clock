@@ -4,7 +4,7 @@
         "name": "Trådfri",
         "username": "AA:22:3D:E3:CE:57",
         "port": 51826,
-        "pin": "031-45-123"
+        "pin": "032-45-123"
     },
 
     "description": "This is an example configuration file",
@@ -14,7 +14,7 @@
             "platform": "Ikea Trådfri Hue Clock",
             "name": "Ikea Trådfri Hue Clock",
             "host": "gw-b8d7af2a9d45",
-            "psk" : "xxxxxxx",
+            "psk" : "xxxxxxxxxxx",
 
             "lightbulb": "Sänglampan"
         }

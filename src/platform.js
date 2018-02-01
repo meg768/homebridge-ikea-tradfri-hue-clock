@@ -10,7 +10,6 @@ var isString         = require('yow/is').isString;
 var Timer            = require('yow/timer');
 
 var Lightbulb          = require('./lightbulb.js');
-var RgbLightbulb       = require('./rgb-lightbulb.js');
 var Gateway            = require('./gateway.js');
 var Ikea               = require('node-tradfri-client');
 
@@ -35,9 +34,9 @@ module.exports = class Platform extends Gateway {
     }
 
     deviceUpdated(device) {
-        if (clock && click.instanceId == device.instanceId) {
-            clock.device = device;
-            clock.deviceChanged();
+        if (this.clock && this.clock.device.instanceId == device.instanceId) {
+            this.clock.device = device;
+            this.clock.deviceChanged();
         }
     }
 
@@ -50,8 +49,9 @@ module.exports = class Platform extends Gateway {
 
             if (device.type === Ikea.AccessoryTypes.lightbulb) {
 
-                if (device.name == config.lightbulb) {
-                    this.clock = new RgbLightbulb(this, device);
+                if (device.name == this.config.lightbulb) {
+                    this.log('Creating new clock!!');
+                    this.clock = new Lightbulb(this, device);
                 }
             }
         }
@@ -66,13 +66,11 @@ module.exports = class Platform extends Gateway {
             return this.setup();
         })
         .then(() => {
-            var accessories = [];
+            if (this.clock == undefined)
+                throw new Error('Clock not found.');
 
-            for (var id in this.devices) {
-                accessories.push(this.devices[id]);
-            }
-
-            callback(accessories);
+            
+            callback([this.clock]);
         })
         .catch((error) => {
             // Display error and make sure to stop.

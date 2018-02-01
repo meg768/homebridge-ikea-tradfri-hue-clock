@@ -17,7 +17,7 @@ module.exports = class Accessory extends Events {
         this.homebridge = platform.homebridge;
         this.Characteristic = platform.homebridge.hap.Characteristic;
         this.Service = platform.homebridge.hap.Service;
-        this.services = {};
+        this.services = [];
 
         // Important, set uuid_base to a unique uuid otherwise
         // two accessories with the same name cannot be created...
@@ -49,7 +49,7 @@ module.exports = class Accessory extends Events {
             service.setCharacteristic(this.Characteristic.SerialNumber, serialNumber);
 
 
-        this.addService('deviceInfo', service);
+        this.addService(service);
 
     }
 
@@ -76,13 +76,7 @@ module.exports = class Accessory extends Events {
     }
 
     getServices() {
-        var services = [];
-
-        for (var id in this.services) {
-            services.push(this.services[id]);
-        }
-
-        return services;
+        return this.services;
     }
 
 };
