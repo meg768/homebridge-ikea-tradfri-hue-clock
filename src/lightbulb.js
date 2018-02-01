@@ -50,7 +50,7 @@ module.exports = class Lightbulb extends Device {
 
         this.saturation = 100;
         this.luminance = 50;
-        this.hue = ((((now.getHours()-4) % 12) * 60) + now.getMinutes()) / 2;
+        this.hue = ((((now.getHours()) % 12) * 60) + now.getMinutes()) / 2;
         hue.updateValue(this.hue);
         saturation.updateValue(this.saturation);
 
