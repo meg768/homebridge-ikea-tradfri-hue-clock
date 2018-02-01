@@ -42,6 +42,7 @@ module.exports = class Lightbulb extends Device {
 
     displayClock(callback) {
         var now = new Date();
+        var hue = this.lightbulb.getCharacteristic(this.Characteristic.Hue);
 
         this.hue = (((now.getHours() % 12) * 60) + now.getMinutes()) / 2;
         hue.updateValue(this.hue);
